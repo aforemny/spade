@@ -147,6 +147,22 @@ where
     locate_structure: L,
 }
 
+unsafe impl<V, K, L> Send for DelaunayTriangulation<V, K, L>
+where
+    V: Send + HasPosition2D,
+    K: DelaunayKernel<<V::Point as PointN>::Scalar>,
+    V::Point: TwoDimensional,
+    L: Send + DelaunayLocateStructure<V::Point>,
+{}
+
+unsafe impl<V, K, L> Sync for DelaunayTriangulation<V, K, L>
+where
+    V: Sync + HasPosition2D,
+    K: DelaunayKernel<<V::Point as PointN>::Scalar>,
+    V::Point: TwoDimensional,
+    L: Sync + DelaunayLocateStructure<V::Point>,
+{}
+
 impl<V, K, L> BasicDelaunaySubdivision<V> for DelaunayTriangulation<V, K, L>
 where
     V: HasPosition2D,
